@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InfoTech Solutions - Contato</title>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        function validateForm() {
+            // Limpa mensagens de erro anteriores
+            document.getElementById('nameError').textContent = '';
+            document.getElementById('emailError').textContent = '';
+            document.getElementById('phoneError').textContent = '';
+            document.getElementById('messageError').textContent = '';
+
+            // Remove classes de erro dos campos
+            document.getElementById('name').classList.remove('error');
+            document.getElementById('email').classList.remove('error');
+            document.getElementById('phone').classList.remove('error');
+            document.getElementById('message').classList.remove('error');
+
+            var name = document.forms["contactForm"]["name"].value;
+            var email = document.forms["contactForm"]["email"].value;
+            var phone = document.forms["contactForm"]["phone"].value;
+            var message = document.forms["contactForm"]["message"].value;
+            var isValid = true;
+
+            if (name.trim() === "") {
+                document.getElementById('nameError').textContent = "O campo Nome é obrigatório.";
+                document.getElementById('name').classList.add('error');
+                isValid = false;
+            }
+
+            if (email.trim() === "") {
+                document.getElementById('emailError').textContent = "O campo E-mail é obrigatório.";
+                document.getElementById('email').classList.add('error');
+                isValid = false;
+            } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                document.getElementById('emailError').textContent = "Por favor, insira um e-mail válido.";
+                document.getElementById('email').classList.add('error');
+                isValid = false;
+            }
+            
+            if (phone.trim() !== "" && !/^\(\d{2}\)\s\d{4,5}-\d{4}$/.test(phone)) {
+                document.getElementById('phoneError').textContent = "Formato inválido. Use (00) 00000-0000.";
+                document.getElementById('phone').classList.add('error');
+                isValid = false;
+            }
+            
+            if (message.trim() === "") {
+                document.getElementById('messageError').textContent = "O campo Mensagem é obrigatório.";
+                document.getElementById('message').classList.add('error');
+                isValid = false;
+            }
+
+            if (isValid) {
+                // Feedback visual de que os dados serão criptografados
+                const submitBtn = document.querySelector('input[type="submit"]');
+                const originalText = submitBtn.value;
+                submitBtn.value = "Criptografando e Enviando...";
+                submitBtn.classList.add('encrypting');
+                
+                // Simulação de criptografia
+                setTimeout(() => {
+                    console.log("Dados seriam criptografados com AES-256 aqui.");
+                    alert("Mensagem enviada com sucesso! (Simulação)");
+                    submitBtn.value = originalText;
+                    submitBtn.classList.remove('encrypting');
+                    document.forms["contactForm"].reset();
+                }, 1500);
+                
+                // Em uma implementação real, evitaríamos o preventDefault() e o form seria enviado
+                return false; // Para fins de demonstração, não enviamos realmente
+            }
+            
+            return isValid;
+        }
+        
+        // Formatação do telefone
+        function formatPhone(input) {
+            // Remove tudo que não é dígito
+            let value = input.value.replace(/\D/g, '');
+            
+            // Aplica a formatação
+            if (value.length <= 11) {
+                value = value.replace(/(\d{2})(\d)/, '($1) $2');
+                value = value.replace(/(\d{5})(\d)/, '$1-$2');
+            }
+            
+            input.value = value;
+        }
+        
+        // Adiciona indicador visual de campo obrigatório
+        document.addEventListener('DOMContentLoaded', function() {
+            const labels = document.querySelectorAll('.form-group label');
+            labels.forEach(label => {
+                if (label.htmlFor !== 'phone') {
+                    label.innerHTML += '<span class="required-indicator">*</span>';
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Entre em Contato</h1>
+            <p>Estamos prontos para ajudar sua empresa</p>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="services.html">Serviços</a></li>
+                <li><a href="contact.html" class="active">Contato</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <main>
+        <div class="container">
+            <section class="contact-intro">
+                <h2>Fale Conosco</h2>
+                <p>Preencha o formulário abaixo e nossa equipe entrará em contato o mais breve possível.</p>
+            </section>
+            
+            <section class="contact-content">
+                <div class="contact-form">
+                    <h3>Formulário de Contato</h3>
+                    <form name="contactForm" action="mailto:contato@infotech.com" method="post" enctype="text/plain" onsubmit="return validateForm()">
+                        
+                        <div class="form-group">
+                            <label for="name">Nome:</label>
+                            <input type="text" id="name" name="name" placeholder="Seu nome completo">
+                            <span class="error-message" id="nameError"></span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">E-mail:</label>
+                            <input type="email" id="email" name="email" placeholder="seu@email.com">
+                            <span class="error-message" id="emailError"></span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Telefone (opcional):</label>
+                            <input type="text" id="phone" name="phone" placeholder="(11) 99999-9999" oninput="formatPhone(this)" maxlength="15">
+                            <span class="error-message" id="phoneError"></span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Mensagem:</label>
+                            <textarea id="message" name="message" rows="5" placeholder="Como podemos ajudá-lo?"></textarea>
+                            <span class="error-message" id="messageError"></span>
+                        </div>
+                        
+                        <input type="submit" value="Enviar Mensagem">
+                        <p class="security-note">Todos os dados são criptografados com AES-256 para sua segurança.</p>
+                    </form>
+                </div>
+                
+                <div class="contact-info">
+                    <h3>Outras Formas de Contato</h3>
+                    <div class="contact-item">
+                        <h4>E-mail</h4>
+                        <p>contato@infotech.com</p>
+                    </div>
+                    <div class="contact-item">
+                        <h4>Telefone</h4>
+                        <p>(11) 99999-9999</p>
+                    </div>
+                    <div class="contact-item">
+                        <h4>Horário de Atendimento</h4>
+                        <p>Segunda a sexta, das 9h às 18h</p>
+                    </div>
+                    <div class="contact-item">
+                        <h4>Endereço</h4>
+                        <p>Av. Paulista, 1000<br>São Paulo - SP<br>CEP: 01310-100</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 InfoTech Solutions. Todos os direitos reservados.</p>
+            <p>E-mail: contato@infotech.com | Telefone: (11) 99999-9999</p>
+        </div>
+    </footer>
+</body>
+</html>
