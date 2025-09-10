@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>InfoTech Solutions - Painel Administrativo</title>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <header>
+        <div class="container">
+            <h1>⚠️ Acesso Negado</h1>
+            <p>Usuário ou senha inválidos.</p>
+            <p>
+                <i
+                    >Em um sistema real, seria feita a validação com o banco de
+                    dados.</i
+                >
+            </p>
+        </div>
+    </header>
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 InfoTech Solutions. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+    <script>
+        let seconds = 5;
+
+        const container = document.querySelector(".container");
+        const redirectMsg = document.createElement("p");
+
+        redirectMsg.id = "redirect-msg";
+        redirectMsg.textContent = `Você será redirecionado de volta em ${seconds} segundos.`;
+        container.appendChild(redirectMsg);
+
+        const interval = setInterval(() => {
+            seconds--;
+            if (seconds > 0) {
+                redirectMsg.textContent = `Você será redirecionado de volta em ${seconds} segundos.`;
+            } else {
+                clearInterval(interval);
+            }
+        }, 1000);
+        setTimeout(() => {
+            window.location.href = "admin.html";
+        }, 5000);
+    </script>
+</html>

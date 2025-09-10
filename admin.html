@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>InfoTech Solutions - Serviços</title>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <header>
+        <div class="container">
+            <h1>InfoTech Solutions</h1>
+            <p>Estamos prontos para ajudar sua empresa</p>
+        </div>
+    </header>
+    <body>
+        <div class="contact-form" style="max-width: 50svh; margin: auto">
+            <h3>Login</h3>
+            <form
+                id="loginForm"
+                name="contactForm"
+                action="painel.html"
+                method="get"
+                enctype="text/plain"
+            >
+                <div class="form-group">
+                    <label for="email">E-mail:</label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="seu@email.com"
+                        type="email"
+                        required
+                    />
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Senha:</label>
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Digite sua senha"
+                        required
+                    />
+                </div>
+                <input type="submit" value="Entrar" />
+                <p class="security-note">
+                    Todos os dados seriam criptografados e acessíveis apenas por
+                    administradores autorizados.
+                </p>
+            </form>
+        </div>
+    </body>
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 InfoTech Solutions. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+    <script>
+        document
+            .getElementById("loginForm")
+            .addEventListener("submit", function (event) {
+                event.preventDefault();
+
+                const mockEmail = "admin@infotech.com";
+                const mockPassword = "1234";
+
+                const email = document.getElementById("email").value;
+                const password = document.getElementById("password").value;
+
+                if (email === mockEmail && password === mockPassword) {
+                    window.location.href = "painel.html";
+                } else {
+                    window.location.href = "erro.html";
+                }
+            });
+    </script>
+</html>
